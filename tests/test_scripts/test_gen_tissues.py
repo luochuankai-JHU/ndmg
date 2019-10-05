@@ -85,7 +85,7 @@ namer.add_dirs_dwi(paths, labels, label_dirs)
 runniii = dmri_reg(namer, nodif_B0, nodif_B0_mask, t1w_in, vox_size,simple=False)
 # dmri_reg(namer, nodif_B0, nodif_B0_mask, t1w, vox_size, simple=False)
 
-runniii.tissue2dwi_align()
+# runniii.tissue2dwi_align()
 runniii.gen_tissues()
 
 
