@@ -1,0 +1,5 @@
+ndmg_outputs/tmp/reg_m/roi_2_mni.mat filter=lfs diff=lfs merge=lfs -text
+ndmg_outputs/anat/registered/t1w_csf_mask_dwi.nii.gz filter=lfs diff=lfs merge=lfs -text
+ndmg_outputs/tmp/reg_a/t1w_csf_mask_dwi_bin.nii.gz filter=lfs diff=lfs merge=lfs -text
+ndmg_outputs/tmp/reg_a/t1w_gm_in_dwi_bin.nii.gz filter=lfs diff=lfs merge=lfs -text
+ndmg_outputs/tmp/reg_a/t1w_wm_in_dwi_bin.nii.gz filter=lfs diff=lfs merge=lfs -text
