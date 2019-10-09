@@ -68,7 +68,7 @@ labels = ['/ndmg_atlases/atlases/label/Human/desikan_space-MNI152NLin6_res-2x2x2
 label_dirs = ["conn"]
 
 from ndmg.utils.bids_utils import flatten
-from ndmg.register.gen_reg import dmri_reg
+import ndmg.register.gen_reg
 from ndmg.utils.bids_utils import name_resource
 from ndmg.utils.gen_utils import make_gtab_and_bmask
 
@@ -81,19 +81,20 @@ namer = name_resource(dwi, t1w, atlas, outdir)
 
 namer.add_dirs_dwi(paths, labels, label_dirs)
 
-runniii = dmri_reg(namer, nodif_B0, nodif_B0_mask, t1w_in, vox_size,simple=False)
+test_tissue2dwi_align_result = DmriReg(namer, nodif_B0, nodif_B0_mask, t1w_in, vox_size, simple=False)
+
+# runniii = DmriReg(namer, nodif_B0, nodif_B0_mask, t1w_in, vox_size,simple=False)
 # dmri_reg(namer, nodif_B0, nodif_B0_mask, t1w, vox_size, simple=False)
 
-runniii.tissue2dwi_align()
+# runniii.tissue2dwi_align()
 
 def test_tissue2dwi_align():
-    runniii.tissue2dwi_align()
-    a = np.array(np.loadtxt(runniii.xfm_roi2mni_init))
+    # runniii.tissue2dwi_align()
+    test_tissue2dwi_align_result()
+    a = np.array(np.loadtxt(test_tissue2dwi_align_result.xfm_roi2mni_init))
     outarray = np.array([[ 1.30201748e-01, -1.82806115e-01, -9.74489331e-01,  1.77111309e+02],
                         [3.79709005e-02,  9.83054222e-01, -1.79339507e-01,  1.51448375e+01],
                         [9.90760194e-01, -1.36519317e-02,  1.34936684e-01, -3.70971904e+01],
                         [0.00000000e+00, 0.00000000e+00,  0.00000000e+00,  1.00000000e+00]])
     assert np.allclose(a, outarray)
-
-test_tissue2dwi_align()
 
