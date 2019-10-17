@@ -26,23 +26,23 @@ def test_apply_warp(tmp_path):
     #make a temporary path#
     d = tmp_path / "sub"
     d.mkdir()
-    out_out_cntl_path = d / "outnii.nii.gz"
-    warp_out_cntl_path = d/  "warpnii.nii.gz"
+    out_out_cntrl_path = d / "outnii.nii.gz"
+    warp_out_cntrl_path = d/  "warpnii.nii.gz"
 
     #define correct input data path
     ref_in_path = '../test_data/inputs/apply_warp/t1w_brain_nores.nii.gz'
     inp_in_path = '../test_data/inputs/apply_warp/desikan_space-MNI152NLin6_res-2x2x2_reor_RAS_nores_aligned_atlas_t1w_mni.nii.gz'
-    warp_out_cntl_path_temp = '../test_data/outputs/apply_warp/mni2t1w_warp.nii.gz'
-    out = out_out_cntl_path
-    warp = warp_out_cntl_path
+    warp_out_cntrl_path_temp = '../test_data/outputs/apply_warp/mni2t1w_warp.nii.gz'
+    out = out_out_cntrl_path
+    warp = warp_out_cntrl_path
 
-    apply_warp(str(ref_in_path),str(inp_in_path),str(out_out_cntl_path),str(warp_out_cntl_path))
+    apply_warp(str(ref_in_path),str(inp_in_path),str(out_out_cntrl_path),str(warp_out_cntrl_path))
 
 
 
-    warp_out_cntl_temp = nib.load(str(warp_out_cntl_path_temp)).get_fdata()
+    warp_out_cntrl_temp = nib.load(str(warp_out_cntrl_path_temp)).get_fdata()
     
-    warp_out_cntl = nib.load(str(warp_out_cntl_path)).get_fdata()
+    warp_out_cntrl = nib.load(str(warp_out_cntrl_path)).get_fdata()
     
 
-    assert np.allclose(warp_out_cntl_temp,warp_out_cntl)
+    assert np.allclose(warp_out_cntrl_temp,warp_out_cntrl)
