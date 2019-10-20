@@ -7,10 +7,20 @@ namer = MagicMock()
 import pytest
 
 
+nodif_B0 = '../test_data/inputs/dmri_reg/nodif_B0.nii.gz'
+nodif_B0_mask = '../test_data/inputs/dmri_reg/nodif_B0_bet_mask.nii.gz'
+t1w_in = '../test_data/inputs/dmri_reg/sub-0025864_ses-1_dwi.bval'
+vox_size = '2mm'
+dwi = '../test_data/inputs/dmri_reg/sub-0025864_ses-1_dwi.nii.gz'
+t1w = '../test_data/inputs/dmri_reg/sub-0025864_ses-1_dwi.bval'
+atlas = 'desikan'
 
 def test_tissue2dwi_align(tmp_path):
     d = tmp_path / "sub"
     d.mkdir()
+    # outdir = d
+
+
     test_1 = dmri_reg(namer, nodif_B0, nodif_B0_mask, t1w_in, vox_size, simple=False)
     namer.dirs = {'property1': {'property2': d}}
     test_1.tissue2dwi_align()
@@ -22,14 +32,8 @@ def test_tissue2dwi_align(tmp_path):
     assert np.allclose(a, outarray)
 
 
-# nodif_B0 = '../ndmg_outputs/dwi/preproc/nodif_B0.nii.gz'
-# nodif_B0_mask = '../ndmg_outputs/dwi/preproc/nodif_B0_bet_mask.nii.gz'
-# t1w_in = '../BNU1/sub-0025864/ses-1/dwi/sub-0025864_ses-1_dwi.bval'
-# vox_size = '2mm'
-# dwi = '../BNU1/sub-0025864/ses-1/dwi/sub-0025864_ses-1_dwi.nii.gz'
-# t1w = '../BNU1//sub-0025864/ses-1/dwi/sub-0025864_ses-1_dwi.bval'
-# atlas = 'desikan'
-# outdir = '../ndmg_outputs'
+
+
 # paths = {
 #     "prep_dwi": "dwi/preproc",
 #     "prep_anat": "anat/preproc",

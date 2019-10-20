@@ -106,24 +106,10 @@ def show_template_bundles(final_streamlines, template_path, fname):
 
 
 def execute_cmd(cmd, verb=False):
-    """Given a bash command, it is executed and the response piped back to the
-    calling script
-    
-    Parameters
-    ----------
-    cmd : str
-        command you want to execute
-    verb : bool, optional
-        whether to print the command that is being executed, by default False
-    
-    Returns
-    -------
-    stdout
-        outputs from p.communicate
-    stderr
-        error from p.communicate
     """
-    
+    Given a bash command, it is executed and the response piped back to the
+    calling script
+    """
     if verb:
         print("Executing: {}".format(cmd))
 
@@ -140,26 +126,15 @@ def name_tmps(basedir, basename, extension):
 
 
 def get_braindata(brain_file):
-    """Opens a brain data series for a mask, mri image, or atlas.
-    Returns a numpy.ndarray representation of a brain.
-    
-    Parameters
-    ----------
-    brain_file : str, nibabel.nifti1.nifti1image, numpy.ndarray
-        an object to open the data for a brain. Can be a string (path to a brain file),
-        nibabel.nifti1.nifti1image, or a numpy.ndarray
-    
-    Returns
-    -------
-    array
-        array of image data
-    
-    Raises
-    ------
-    TypeError
-        Brain file is not an accepted format
     """
-
+    Opens a brain data series for a mask, mri image, or atlas.
+    Returns a numpy.ndarray representation of a brain.
+    **Positional Arguements**
+        brain_file:
+            - an object to open the data for a brain.
+            Can be a string (path to a brain file),
+            nibabel.nifti1.nifti1image, or a numpy.ndarray
+    """
     if type(brain_file) is np.ndarray:  # if brain passed as matrix
         braindata = brain_file
     else:
@@ -178,34 +153,24 @@ def get_braindata(brain_file):
 
 
 def get_filename(label):
-    """Given a fully qualified path, return just the file name, without extension
-    
-    Parameters
-    ----------
-    label : str
-        Path to file you want isolated
-    
-    Returns
-    -------
-    str
-        File name
+    """
+    Given a fully qualified path gets just the file name, without extension
     """
     return op.splitext(op.splitext(op.basename(label))[0])[0]
 
 
 def get_slice(mri, volid, sli):
-    """Takes a volume index and constructs a new nifti image from the specified volume
-    
-    Parameters
-    ----------
-    mri : str
-        Path to the 4d mri volume you wish to extract a slice from
-    volid : int
-        The index of the volume desired
-    sli : str
-        Path for the resulting file containing the desired slice
     """
-    
+    Takes a volume index and constructs a new nifti image from
+    the specified volume.
+    **Positional Arguments:**
+        mri:
+            - the path to a 4d mri volume to extract a slice from.
+        volid:
+            - the index of the volume desired.
+        sli:
+            - the path to the destination for the slice.
+    """
     mri_im = nib.load(mri)
     data = mri_im.get_data()
     # get the slice at the desired volume
@@ -226,11 +191,11 @@ def make_gtab_and_bmask(fbval, fbvec, dwi_file, outdir):
     Parameters
     ----------
     fbval : str
-        Path to b-value file
+        b-value file
     fbvec : str
-        Path to b-vector file
+        b-vector file
     dwi_file : str
-        Path to dwi file being analyzed
+        dwi file being analyzed
     outdir : str
         output directory
     
@@ -485,22 +450,13 @@ def match_target_vox_res(img_file, vox_size, namer, sens):
 
 
 def load_timeseries(timeseries_file, ts="roi"):
-    """Loads timeseries data. Exists to standardize formatting in case changes are made
-    with how timeseries are saved in future versions.
-    
-    Parameters
-    ----------
-    timeseries_file : str
-        Path to the file you wish to load timeseries data from
-    ts : str, optional
-        Timeseries type, either 'roi' or 'voxel, by default "roi"
-    
-    Returns
-    -------
-    [type]
-        [description]
     """
-    
+    A function to load timeseries data. Exists to standardize
+    formatting in case changes are made with how timeseries are
+    saved in future versions.
+     **Positional Arguments**
+         timeseries_file: the file to load timeseries data from.
+    """
     if (ts == "roi") or (ts == "voxel"):
         timeseries = np.load(timeseries_file)["roi"]
         return timeseries
@@ -517,22 +473,20 @@ def name_tmps(basedir, basename, extension):
 
 
 def parcel_overlap(parcellation1, parcellation2, outpath):
-    """A function to compute the percent composition of each parcel in
+    """
+    A function to compute the percent composition of each parcel in
     parcellation 1 with the parcels in parcellation 2. Rows are indices
     in parcellation 1; cols are parcels in parcellation 2. Values are the
     percent of voxels in parcel (parcellation 1) that fall into parcel
     (parcellation 2). Implied is that each row sums to 1.
-    
-    Parameters
-    ----------
-    parcellation1 : str
-        the path to the first parcellation.
-    parcellation2 : str
-        the path to the second parcellation.
-    outpath : str
-        the path to produce the output.
+    **Positional Arguments:**
+        parcellation1:
+            - the path to the first parcellation.
+        parcellation2:
+            - the path to the second parcellation.
+        outpath:
+            - the path to produce the output.
     """
-    
     p1_dat = nib.load(parcellation1).get_data()
     p2_dat = nib.load(parcellation2).get_data()
     p1regs = np.unique(p1_dat)

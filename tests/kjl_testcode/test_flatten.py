@@ -29,5 +29,3 @@ def test_flatten():
                          '/mnt/d/Downloads/ne...ts/qa/mri',
                          '/mnt/d/Downloads/ne...ts/qa/reg',
                          '/mnt/d/Downloads/ne...qa/tensor']
-
-test_flatten()
