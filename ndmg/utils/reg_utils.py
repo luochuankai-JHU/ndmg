@@ -26,6 +26,8 @@ import numpy as np
 import nilearn.image as nl
 import os
 import os.path as op
+import dipy
+from dipy.segment.tissue import TissueClassifierHMRF
 
 
 def erode_mask(mask, v=0):
@@ -316,13 +318,37 @@ def segment_t1w(t1w, basename, opts=""):
     print("Segmenting Anatomical Image into WM, GM, and CSF with FSL's FAST:")
     # run FAST, with options -t for the image type and -n to
     # segment into CSF (pve_0), WM (pve_1), GM (pve_2)
-    cmd = "fast -t 1 {} -n 3 -o {} {}".format(opts, basename, t1w)
-    print("Executing fast: {}".format(cmd))
-    os.system(cmd)
+    # cmd = "fast -t 1 {} -n 3 -o {} {}".format(opts, basename, t1w)
+    # print("Executing fast: {}".format(cmd))
+    # os.system(cmd)
+    # out = {}  # the outputs
+    # out["wm_prob"] = "{}_{}".format(basename, "pve_2.nii.gz")
+    # out["gm_prob"] = "{}_{}".format(basename, "pve_1.nii.gz")
+    # out["csf_prob"] = "{}_{}".format(basename, "pve_0.nii.gz")
+
+    # we need to use dipy's TissueClassified function to segment t1w and put it it to basename
+    t1 = nib.load(t1w)
+    t1_array = t1.get_data()
+    t1_header = t1.header
+    t1_affine = t1.affine
+    nclass = 3
+    beta = 0.1
+    hmrf = TissueClassifierHMRF()
+    initial_segmentation, final_segmentation, PVE = hmrf.classify(t1_array, nclass, beta)
+    CSF_array = PVE[ :, :, :, 0]
+    gm_array = PVE[:, :, :, 1]
+    wm_array = PVE[:, :, :, 2]
+    CSF_nii = nib.nifti1.Nifti1Image(CSF_array, t1_affine, t1_header)
+    gm_nii = nib.nifti1.Nifti1Image(gm_array, t1_affine, t1_header)
+    wm_nii = nib.nifti1.Nifti1Image(wm_array, t1_affine, t1_header)
+    nib.save(CSF_nii, "{}_{}".format(basename, "pve_0.nii.gz"))
+    nib.save(gm_nii, "{}_{}".format(basename, "pve_1.nii.gz"))
+    nib.save(wm_nii, "{}_{}".format(basename, "pve_2.nii.gz"))
     out = {}  # the outputs
     out["wm_prob"] = "{}_{}".format(basename, "pve_2.nii.gz")
     out["gm_prob"] = "{}_{}".format(basename, "pve_1.nii.gz")
     out["csf_prob"] = "{}_{}".format(basename, "pve_0.nii.gz")
+
     return out
 
 
