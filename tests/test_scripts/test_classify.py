@@ -3,7 +3,7 @@ from dipy.segment.tissue import (TissueClassifierHMRF)
 import nibabel as nib
 
 
-image_nii = nib.load('/mnt/d/Downloads/neurodatadesign/ndmg/tests/ndmg_outputs/anat/preproc/t1w_brain.nii.gz')
+image_nii = nib.load('../tests/test_data/inputs/classify/t1w_brain.nii.gz')
 image = image_nii.get_data()
 nclasses = 3
 
