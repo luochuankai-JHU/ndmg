@@ -315,9 +315,9 @@ def segment_t1w(t1w, basename, opts=""):
         dictionary of output files
     """
     
-    print("Segmenting Anatomical Image into WM, GM, and CSF with FSL's FAST:")
-    # run FAST, with options -t for the image type and -n to
-    # segment into CSF (pve_0), WM (pve_1), GM (pve_2)
+    # print("Segmenting Anatomical Image into WM, GM, and CSF with FSL's FAST:")
+    # # run FAST, with options -t for the image type and -n to
+    # # segment into CSF (pve_0), WM (pve_1), GM (pve_2)
     # cmd = "fast -t 1 {} -n 3 -o {} {}".format(opts, basename, t1w)
     # print("Executing fast: {}".format(cmd))
     # os.system(cmd)
@@ -325,8 +325,9 @@ def segment_t1w(t1w, basename, opts=""):
     # out["wm_prob"] = "{}_{}".format(basename, "pve_2.nii.gz")
     # out["gm_prob"] = "{}_{}".format(basename, "pve_1.nii.gz")
     # out["csf_prob"] = "{}_{}".format(basename, "pve_0.nii.gz")
-
+    
     # we need to use dipy's TissueClassified function to segment t1w and put it it to basename
+    print("Segmenting Anatomical Image into WM, GM, and CSF with dipy's TissueClassifierHMRF:")
     t1 = nib.load(t1w)
     t1_array = t1.get_data()
     t1_header = t1.header
