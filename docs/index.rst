@@ -7,7 +7,7 @@
 
 ndmg
 ================================
-
+XXXXXXX
 NeuroData’s MR Graphs package, ndmg (pronounced “nutmeg”), is the successor of the MRCAP, MIGRAINE, and m2g pipelines. ndmg combines dMRI and sMRI data from a single subject to estimate a high-level connectome reliably and scalably.
 
 The ndmg pipeline has been developed as a one-click solution for human connectome estimation by providing robust and reliable estimates of connectivity across a wide range of datasets. The pipelines are explained and derivatives analyzed in our pre-print, available on BiorXiv_.
